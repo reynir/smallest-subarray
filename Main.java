@@ -43,6 +43,12 @@ public class Main {
             m = Integer.parseInt(s[1]);
             k = Integer.parseInt(s[2]);
 
+            /* A dirty fix for the special case k=1 that's not supposed to be allowed. */
+            if (k==1) {
+                System.out.printf("Case %d: 1", j+1);
+                continue;
+            }
+
             /* Initialize the sequence */
             for (int i=3; i<n; i++) {
                 N[i] = ((N[i-1] + N[i-2] + N[i-3]) % m) + 1;
