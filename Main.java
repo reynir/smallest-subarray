@@ -45,7 +45,7 @@ public class Main {
 
             /* A dirty fix for the special case k=1 that's not supposed to be allowed. */
             if (k==1) {
-                System.out.printf("Case %d: 1", j+1);
+                System.out.printf("Case %d: 1\n", j+1);
                 continue;
             }
 
