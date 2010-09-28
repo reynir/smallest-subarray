@@ -33,40 +33,46 @@ int main(void)
             continue;
         }
 
-        for (i=3; i<n; i++) {
-            N[i] = (N[i-1]+N[i-2]+N[i-3]) % m + 1;
-        }
-
         res = -1;
-        nfound = 0;
+        nfound = 3;
 
         for (i=0; i<=k; i++) {
             M[i].next = NULL;
             M[i].prev = NULL;
         }
 
-        for (i=0; i<n; i++) {
+        M[1].val=0;
+        M[2].val=1;
+        M[3].val=2;
+        head = tail = &M[1];
+        update(&M[2]);
+        update(&M[3]);
+
+        for (i=3; i<n; i++) {
+            N[i] = (N[i-1]+N[i-2]+N[i-3]) % m + 1;
             if (N[i]<=k) {
                 M[N[i]].val = i;
 
-                if (nfound == 0) {
-                    head = tail = &M[N[i]];
-                    nfound++;
-                } else if (nfound < k-1) {
+                if (nfound < k-1) {
                     if (undiscovered(N[i])) 
                         nfound++;
                     update(&M[N[i]]);
                 } else if (nfound == k-1) {
                     if (undiscovered(N[i])) {
                         res = i-tail->val+1;
+                        if (res == k)
+                            break;
                         nfound++;
                     }
                     update(&M[N[i]]);
                 } else {
                     if (&M[N[i]] == tail) {
                         update(&M[N[i]]);
-                        if (i-tail->val+1 < res)
+                        if (i-tail->val+1 < res) {
                             res = i - tail->val + 1;
+                            if (res == k)
+                                break;
+                        }
                     } else {
                         update(&M[N[i]]);
                     }
